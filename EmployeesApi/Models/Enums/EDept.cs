@@ -1,6 +1,6 @@
 ﻿namespace EmployeesApi.Models.Enums
 {
-    public enum Dept
+    public enum EDept
     {
         HumanResources = 1,
         Finance = 2,
