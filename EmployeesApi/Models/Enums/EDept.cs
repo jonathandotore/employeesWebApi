@@ -6,6 +6,7 @@
         Finance = 2,
         Purchasing = 3,
         Service = 4,
-        Caretaking = 5
+        Caretaking = 5,
+        IT = 6
     }
 }
