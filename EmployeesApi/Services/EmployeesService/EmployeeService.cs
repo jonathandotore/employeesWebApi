@@ -1,7 +1,8 @@
 ﻿using EmployeesApi.DataContext;
 using EmployeesApi.Models;
 using System.Data.Entity;
-using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace EmployeesApi.Services.EmployeesService
 {
@@ -20,9 +21,8 @@ namespace EmployeesApi.Services.EmployeesService
 
             try
             {
+                var employees = _context.Employees.ToList();
 
-                var employees = await _context.Employees.ToListAsync();
-                   
                 if (employees.Count == 0)
                 {
                     response.Data = null;
@@ -34,7 +34,7 @@ namespace EmployeesApi.Services.EmployeesService
                 response.Message = "Success!";
                 response.Status = true;
 
-             
+
             }
             catch (Exception ex)
             {

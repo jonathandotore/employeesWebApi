@@ -1,5 +1,4 @@
 ﻿using EmployeesApi.Services.EmployeesService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeesApi.Controllers
@@ -17,9 +16,9 @@ namespace EmployeesApi.Controllers
 
 
         [HttpGet]
-        public IActionResult GetEmployees()
+        public async Task<IActionResult> GetEmployees()
         {
-            var employees = _employeeService.GetEmployees();
+            var employees = await _employeeService.GetEmployees();
 
             return Ok(employees);
         }
