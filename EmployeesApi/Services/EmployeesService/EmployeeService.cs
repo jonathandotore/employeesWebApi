@@ -1,6 +1,5 @@
 ﻿using EmployeesApi.DataContext;
 using EmployeesApi.Models;
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,14 +13,13 @@ namespace EmployeesApi.Services.EmployeesService
         {
             _context = context;
         }
-
         public async Task<ServiceResponse<List<EmployeeModel>>> GetEmployees()
         {
             ServiceResponse<List<EmployeeModel>> response = new ServiceResponse<List<EmployeeModel>>();
 
             try
             {
-                var employees = _context.Employees.ToList();
+                var employees = await _context.Employees.ToListAsync();
 
                 if (employees.Count == 0)
                 {
@@ -43,6 +41,45 @@ namespace EmployeesApi.Services.EmployeesService
                 response.Status = false;
 
                 return response;
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse<List<EmployeeModel>>> CreateEmployees(EmployeeModel newEmployee)
+        {
+            ServiceResponse<List<EmployeeModel>> response = new ServiceResponse<List<EmployeeModel>>();
+
+            try
+            {
+                if (newEmployee == null)
+                {
+                    response.Message = "Please, check the provided information and try again.";
+
+                    return response;
+                }
+
+                await _context.AddAsync(newEmployee);
+                var row = await _context.SaveChangesAsync();
+
+                if (row == 0)
+                {
+                    response.Message = "User was not registered, please call client supp or try again later";
+
+                    return response;
+                }
+
+                var employees = await _context.Employees.AsNoTracking().ToListAsync();
+
+                response.Data = employees;
+                response.Message = "Employee successfully registered!";
+                response.Status = true;
+
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Message = ex.Message;
+                response.Status = false;
             }
 
             return response;
