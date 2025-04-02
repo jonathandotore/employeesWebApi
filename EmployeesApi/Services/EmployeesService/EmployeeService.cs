@@ -123,8 +123,28 @@ namespace EmployeesApi.Services.EmployeesService
         {
             ServiceResponse<EmployeeModel> response = new ServiceResponse<EmployeeModel>();
 
+            var check = CheckEmployeeData(employee);
+
+            if (!check)
+            {
+                response.Message = "The request user could not be updated";
+                response.Status = false;
+
+                return response;
+            }
+            
             try
             {
+                _context.Employees.Update(employee);   
+                await _context.SaveChangesAsync();
+
+                var updatedEmployee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == employee.Id);
+
+                response.Data = updatedEmployee;
+                response.Message = "User sucessfully updated!";
+                response.Status = true;
+
+                return response;
 
 
             }
@@ -139,7 +159,37 @@ namespace EmployeesApi.Services.EmployeesService
         }
         public async Task<ServiceResponse<EmployeeModel>> DeleteEmployee(int id)
         {
-            throw new NotImplementedException();
+            ServiceResponse<EmployeeModel> response = new ServiceResponse<EmployeeModel>();
+
+            try
+            {
+                var emp = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (emp == null)
+                {
+                    response.Message = "The user could not be delete cause the provided id is invalid";
+                    response.Status = false;
+
+                    return response;
+                }
+
+                var row = _context.Employees.Remove(emp);
+                await _context.SaveChangesAsync();
+
+                response.Data = null;
+                response.Message = "User sucessfully deleted";
+                response.Status = true;
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+            }
+
+            return response;
         }
         public async Task<ServiceResponse<EmployeeModel>> DisableEmployee(int id)
         {
@@ -179,5 +229,25 @@ namespace EmployeesApi.Services.EmployeesService
 
             return response;
         }
+
+        #region Extension Methods
+        private static bool CheckEmployeeData(EmployeeModel employee)
+        {
+            if (employee == null) return false;
+
+            EmployeeModel employeeModel = new EmployeeModel()
+            {
+                Name = employee.Name == "" ? throw new Exception("User property NAME cannot be empty") : employee.Name,
+                LastName = employee.LastName == "" ? throw new Exception("User property LASTNAME cannot be empty") : employee.LastName,
+                Dept = (employee.Dept <= 0) ? throw new Exception("User property DEPT cannot be minor than zero") : employee.Dept,
+                Status = employee.Status,
+                Turn = employee.Turn,
+                CreatedAt = employee.CreatedAt,
+                UpdatedAt = DateTime.Now.ToLocalTime()
+            };
+
+            return true;
+        }
+        #endregion
     }
 }

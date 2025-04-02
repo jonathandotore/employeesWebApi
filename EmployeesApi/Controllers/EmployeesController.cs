@@ -58,7 +58,13 @@ namespace EmployeesApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ServiceResponse<EmployeeModel>>> DisableEmployee(int id)
         {
+            if (id <= 0) return BadRequest();
 
+            var employee = await _employeeService.DisableEmployee(id);
+
+            if (employee == null || employee.Data == null) return NotFound();
+
+            return Ok(employee);
         }
 
         [HttpDelete]
