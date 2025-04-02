@@ -8,11 +8,11 @@ namespace EmployeesApi.Services.EmployeesService
     public class EmployeeService : IEmployeeService
     {
         private readonly ApplicationDbContext _context;
-
         public EmployeeService(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public async Task<ServiceResponse<List<EmployeeModel>>> GetEmployees()
         {
             ServiceResponse<List<EmployeeModel>> response = new ServiceResponse<List<EmployeeModel>>();
@@ -79,7 +79,8 @@ namespace EmployeesApi.Services.EmployeesService
 
             return response;
         }
-        public async Task<ServiceResponse<List<EmployeeModel>>> CreateEmployees(EmployeeModel newEmployee)
+        public async Task<ServiceResponse<List<EmployeeModel>>> CreateEmployee(EmployeeModel newEmployee)
+
         {
             ServiceResponse<List<EmployeeModel>> response = new ServiceResponse<List<EmployeeModel>>();
 
@@ -118,13 +119,65 @@ namespace EmployeesApi.Services.EmployeesService
 
             return response;
         }
-        public Task<ServiceResponse<EmployeeModel>> UpdateEmployees(EmployeeModel employee)
+        public async Task<ServiceResponse<EmployeeModel>> UpdateEmployee(EmployeeModel employee)
+        {
+            ServiceResponse<EmployeeModel> response = new ServiceResponse<EmployeeModel>();
+
+            try
+            {
+
+
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Message = "The requested user could not be updated";
+                response.Status = false;
+            }
+
+            return response;
+        }
+        public async Task<ServiceResponse<EmployeeModel>> DeleteEmployee(int id)
         {
             throw new NotImplementedException();
         }
-        public Task<ServiceResponse<EmployeeModel>> DeleteEmployees(int id)
+        public async Task<ServiceResponse<EmployeeModel>> DisableEmployee(int id)
         {
-            throw new NotImplementedException();
+            ServiceResponse<EmployeeModel> response = new ServiceResponse<EmployeeModel>();
+
+            try
+            {
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (employee == null)
+                {
+                    response.Message = "User not found";
+                    response.Status = false;
+
+                    return response;
+                }
+
+                employee.Status = false;
+                employee.UpdatedAt = DateTime.Now.ToLocalTime();
+
+                _context.Employees.Update(employee);
+                await _context.SaveChangesAsync();
+
+                response.Data = employee;
+                response.Message = "User was updated sucessfully";
+                response.Status = true;
+
+                return response;
+
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = "The request user could not be disabled";
+                response.Status = false;
+            }
+
+            return response;
         }
     }
 }

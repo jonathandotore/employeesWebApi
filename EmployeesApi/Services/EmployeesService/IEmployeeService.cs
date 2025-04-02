@@ -6,9 +6,9 @@ namespace EmployeesApi.Services.EmployeesService
     {
         Task<ServiceResponse<List<EmployeeModel>>> GetEmployees();
         Task<ServiceResponse<EmployeeModel>> GetEmployeeById(int id);
-        Task<ServiceResponse<List<EmployeeModel>>> CreateEmployees(EmployeeModel newEmployee);
-        Task<ServiceResponse<EmployeeModel>> UpdateEmployees(EmployeeModel employee);
-        Task<ServiceResponse<EmployeeModel>> DeleteEmployees(int id);
-
+        Task<ServiceResponse<List<EmployeeModel>>> CreateEmployee(EmployeeModel newEmployee);
+        Task<ServiceResponse<EmployeeModel>> UpdateEmployee(EmployeeModel employee);    
+        Task<ServiceResponse<EmployeeModel>> DeleteEmployee(int id);
+        Task<ServiceResponse<EmployeeModel>> DisableEmployee(int id);
     }
 }

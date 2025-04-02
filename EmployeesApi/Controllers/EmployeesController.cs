@@ -21,23 +21,54 @@ namespace EmployeesApi.Controllers
         {
             var employees = await _employeeService.GetEmployees();
 
+            if (employees == null)
+                return NotFound(); 
+
             return Ok(employees);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<EmployeeModel>>> GetEmployeeById(int id)
         {
+            if (id <= 0) return BadRequest();
+
             var employee = await _employeeService.GetEmployeeById(id);
+
+            if (employee == null || employee.Data == null) return NotFound();
 
             return Ok(employee);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<EmployeeModel>>>> CreateEmployees(EmployeeModel newEmployee)
+        public async Task<ActionResult<ServiceResponse<List<EmployeeModel>>>> CreateEmployee(EmployeeModel newEmployee)
         {
-            var emplyoees = await _employeeService.CreateEmployees(newEmployee);
+            var emplyoees = await _employeeService.CreateEmployee(newEmployee);
 
             return Ok(emplyoees);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> UpdateEmployee(EmployeeModel employee)
+        {
+            var updateEmployee = await _employeeService.UpdateEmployee(employee);
+
+            return Ok(employee);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> DisableEmployee(int id)
+        {
+
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> DeleteEmployee(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            var employee = await _employeeService.DeleteEmployee(id);
+
+            return Ok();
         }
     }
 }
