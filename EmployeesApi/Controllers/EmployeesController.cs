@@ -48,14 +48,14 @@ namespace EmployeesApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> UpdateEmployee(EmployeeModel employee)
+        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> UpdateEmployee(EmployeeModel employeem)
         {
             var updateEmployee = await _employeeService.UpdateEmployee(employee);
 
             return Ok(employee);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("disableEmployee/{id}")]
         public async Task<ActionResult<ServiceResponse<EmployeeModel>>> DisableEmployee(int id)
         {
             if (id <= 0) return BadRequest();
