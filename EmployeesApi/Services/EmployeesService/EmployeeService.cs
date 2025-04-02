@@ -45,6 +45,40 @@ namespace EmployeesApi.Services.EmployeesService
 
             return response;
         }
+        public async Task<ServiceResponse<EmployeeModel>> GetEmployeeById(int id)
+        {
+            ServiceResponse<EmployeeModel> response = new ServiceResponse<EmployeeModel>();
+
+            if (id == 0)
+            {
+                response.Message = "Provided id is invalid";
+                response.Status = false;
+            }
+            
+            try
+            {
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (employee == null)
+                {
+                    response.Data = null;
+                    response.Message = "User not found, check provided id and try again";
+                    response.Status = false;
+                }
+
+                response.Data = employee;
+                response.Message = "Success!";
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Message = ex.Message;
+                response.Status = false;
+            }
+
+            return response;
+        }
         public async Task<ServiceResponse<List<EmployeeModel>>> CreateEmployees(EmployeeModel newEmployee)
         {
             ServiceResponse<List<EmployeeModel>> response = new ServiceResponse<List<EmployeeModel>>();
@@ -83,6 +117,14 @@ namespace EmployeesApi.Services.EmployeesService
             }
 
             return response;
+        }
+        public Task<ServiceResponse<EmployeeModel>> UpdateEmployees(EmployeeModel employee)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<ServiceResponse<EmployeeModel>> DeleteEmployees(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

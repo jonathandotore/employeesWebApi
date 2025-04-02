@@ -24,6 +24,14 @@ namespace EmployeesApi.Controllers
             return Ok(employees);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> GetEmployeeById(int id)
+        {
+            var employee = await _employeeService.GetEmployeeById(id);
+
+            return Ok(employee);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<EmployeeModel>>>> CreateEmployees(EmployeeModel newEmployee)
         {
