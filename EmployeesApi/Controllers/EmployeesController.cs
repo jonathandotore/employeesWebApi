@@ -48,7 +48,7 @@ namespace EmployeesApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> UpdateEmployee(EmployeeModel employeem)
+        public async Task<ActionResult<ServiceResponse<EmployeeModel>>> UpdateEmployee(EmployeeModel employee)
         {
             var updateEmployee = await _employeeService.UpdateEmployee(employee);
 
