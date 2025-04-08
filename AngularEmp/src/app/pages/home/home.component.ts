@@ -4,7 +4,6 @@ import { EmployeesService } from '../../services/employees.service';
 import { Employee } from '../../models/Employee';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-home',
   imports:[CommonModule],
@@ -19,7 +18,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private employeeService: EmployeesService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
 
     this.employeeService.GetEmployees().subscribe(response => {
       const dados = response.data;
@@ -34,5 +34,17 @@ export class HomeComponent implements OnInit {
        
     });
 
+  }
+
+  search(event: Event)
+  {
+    console.log(event);
+
+    const target = event.target as HTMLInputElement;
+    const value = target.value.toLocaleLowerCase();
+
+    this.employees = this.allEmployess.filter(user => {
+      return user.name.toLocaleLowerCase().includes(value);
+    });
   }
 }
