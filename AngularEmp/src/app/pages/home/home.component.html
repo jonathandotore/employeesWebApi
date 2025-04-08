@@ -18,15 +18,15 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody *ngFor="let employee of employees">
         <tr>
             <td>
                 <img src="public/check.png" alt="Check" width="20" height="20">
                 <img src="public/uncheck.png" alt="Uncheck" width="20" height="20">
             </td>
-            <td>Jonathan</td>
-            <td>Dotore</td>
-            <td>IT</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.lastName }}</td>
+            <td>{{ employee.dept }}</td>
             <td>
                 <button>Edit</button>
             </td>

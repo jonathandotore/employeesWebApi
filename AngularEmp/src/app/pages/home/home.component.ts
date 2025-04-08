@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { EmployeesService } from '../../services/employees.service';
 import { Employee } from '../../models/Employee';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-home',
-  imports:[],
+  imports:[CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -21,7 +22,17 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.employeeService.GetEmployees().subscribe(response => {
-      console.log(response);
+      const dados = response.data;
+
+      dados.map((item) => {
+        item.createdAt = new Date(item.createdAt!).toLocaleDateString();
+        item.updatedAt = new Date(item.updatedAt!).toLocaleDateString();
+
+      });
+
+      this.employees = dados;
+      this.allEmployess = dados;
+       
     });
 
   }
