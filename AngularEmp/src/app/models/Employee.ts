@@ -6,7 +6,7 @@ export interface Employee
     name: string;
     lastName: string;
     dept: string;
-    status: BlobOptions;
+    status: boolean;
     turn: string;
     createdAt?: string;
     updatedAt?: string;

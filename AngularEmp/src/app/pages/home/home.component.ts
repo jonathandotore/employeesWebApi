@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
       dados.map((item) => {
         item.createdAt = new Date(item.createdAt!).toLocaleDateString();
         item.updatedAt = new Date(item.updatedAt!).toLocaleDateString();
-
       });
 
       this.employees = dados;
