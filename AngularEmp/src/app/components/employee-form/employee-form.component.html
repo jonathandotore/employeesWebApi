@@ -1,0 +1,41 @@
+<form [formGroup]="employeeForm" (ngSubmit)="submit()" #formDit="ngForm">
+    <div class="input-box">
+        <label for="">Name</label>
+        <input type="text" formControlName="name" placeholder="First name" required>
+    </div>
+
+    <div class="input-box">
+        <label for="">Last Name</label>
+        <input type="text" formControlName="lastName" placeholder="Last name" required>
+    </div>
+
+    <div class="input-box">
+        <label>Dept</label>
+        <select name="Dept" formControlName="dept" required>
+            <optgroup>
+                <option value="HumanResource">Human Resource</option>
+                <option value="Finace">Finance</option>
+                <option value="Purchasing">Purchasing</option>
+                <option value="Service">Service</option>
+                <option value="Caretaking">Caretaking</option>
+                <option value="IT">IT</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="input-box">
+        <label>Turn</label>
+        <select name="Turn" formControlName="turn" required>
+            <optgroup>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Evening">Evening</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="btn-box">
+        <button type="submit">Submit</button>
+        <button>Back</button>
+    </div>
+</form>
