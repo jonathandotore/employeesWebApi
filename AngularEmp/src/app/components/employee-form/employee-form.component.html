@@ -35,7 +35,7 @@
     </div>
 
     <div class="btn-box">
-        <button type="submit">Submit</button>
-        <button>Back</button>
+        <button type="submit" [disabled]="!employeeForm.valid">Submit</button>
+        <button routerLink="">Back</button>
     </div>
 </form>
