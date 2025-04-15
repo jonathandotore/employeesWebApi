@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
+  btnAction = "Register";
+  btnTitle = "Register new employee";
+
   constructor(private employeeService: EmployeesService, private router: Router)
   { }
 

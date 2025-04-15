@@ -1,3 +1,5 @@
+<h1>{{btnTitle}}</h1>
+
 <form [formGroup]="employeeForm" (ngSubmit)="submit()" #formDit="ngForm">
     <div class="input-box">
         <label for="">Name</label>
@@ -35,7 +37,7 @@
     </div>
 
     <div class="btn-box">
-        <button type="submit" [disabled]="!employeeForm.valid">Submit</button>
+        <button type="submit" [disabled]="!employeeForm.valid">{{btnAction}}</button>
         <button routerLink="">Back</button>
     </div>
 </form>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Employee } from '../../models/Employee';
@@ -12,6 +12,8 @@ import { Employee } from '../../models/Employee';
 export class EmployeeFormComponent implements OnInit { 
 
   @Output() onSubmit = new EventEmitter<Employee>();
+  @Input() btnAction! : string;
+  @Input() btnTitle! : string;
 
   employeeForm!: FormGroup;
 

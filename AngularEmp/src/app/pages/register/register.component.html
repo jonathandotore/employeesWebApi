@@ -1,4 +1,3 @@
-<h1>Register new Employee</h1>
 <div>
-    <app-employee-form (onSubmit)="registerEmployee($event)"></app-employee-form>
+    <app-employee-form [btnAction]="btnAction" [btnTitle]="btnTitle" (onSubmit)="registerEmployee($event)"></app-employee-form>
 </div>
