@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Employee } from '../../models/Employee';
 
 @Component({
   selector: 'app-employee-form',
@@ -9,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './employee-form.component.css'
 })
 export class EmployeeFormComponent implements OnInit { 
+
+  @Output() onSubmit = new EventEmitter<Employee>();
 
   employeeForm!: FormGroup;
 
@@ -30,6 +33,6 @@ export class EmployeeFormComponent implements OnInit {
   
   submit()
   {
-    console.log(this.employeeForm.value);
+    this.onSubmit.emit(this.employeeForm.value);
   }
 }
